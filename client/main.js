@@ -1,11 +1,16 @@
 import './style.css';
 import { fetchUser, updateUser, fetchAllUsers } from './api/userApi';
 import { LEVELS } from './config/constants';
+import { setupLeaderboard, initializeLeaderboard } from './leaderboard';
+
+
 
 
 
 
 function initializeApp() {
+    setupLeaderboard();
+    initializeLeaderboard();
     const navLinks = document.querySelectorAll("nav ul li a")
     const sections = document.querySelectorAll(".section")
 
@@ -44,9 +49,6 @@ function initializeApp() {
     let availableLines = Number(localStorage.getItem('availableLines')) || 100
     let recoveryInterval = null
     let delayTimeout = null
-
-    // const LEVELS = fetchLevels();
-
 
     function start (){
         checkAndResetDailyScore()
@@ -221,18 +223,6 @@ function initializeApp() {
         `;
     }
 
-    function displayLeaderboard(users) {
-        const sortedUsers = users.sort((a, b) => b.score - a.score);
-        const tbodyHTML = sortedUsers.map((user, index) => `
-            <tr>
-                <td>${index+1}</td>
-                <td>${user.username}</td>
-                <td>${user.score}</td>
-            </tr>
-        `).join('');
-        document.querySelector('#tbody').innerHTML = tbodyHTML
-    }
-    document.querySelector('#leaderboardLink').addEventListener('click', () => { fetchAllUsers().then(users => displayLeaderboard(users)) });
     $circle.addEventListener('click', (event) => {
         const rect = $circle.getBoundingClientRect()
 
