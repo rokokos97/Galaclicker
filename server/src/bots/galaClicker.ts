@@ -3,19 +3,20 @@ import { User } from 'telegraf/typings/core/types/typegram';
 import { handleError } from '../utils/handleError';
 import UserModel from '../models/user';
 import { IUserInput } from '../interfaces';
-import { CONFIG, env } from '../config';
 import chalk from 'chalk';
 
 export const createGalaClickerBot = () => {
-  const bot = new Telegraf(env.TELEGRAM_TOKEN_GALA);
+  if (!process.env.FRONT_URL) {
+    throw new Error('FRONT_URL environment variable is not defined');
+  }
 
+  const bot = new Telegraf(`${process.env.TELEGRAM_TOKEN_GALA}`);
   bot.start(async (ctx: Context) => {
-    console.log(chalk.green('Gala-clicker bot was running...'))
     if (!ctx.message?.from) {
       await ctx.reply('Sorry, there was an error processing your request.');
       return;
     }
-
+    console.log(chalk.green('Gala-clicker bot was running...'))
     const incomeUser: User = ctx.message.from;
     const dataUser: IUserInput = {
       external_id_telegram: incomeUser.id.toString(),
@@ -27,7 +28,7 @@ export const createGalaClickerBot = () => {
       monthlyScore: 0,
       lastUpdated: new Date().toISOString().split('T')[0],
       lastUpdatedMonthly: new Date().toISOString().split('T')[0].slice(0, 7),
-      availableLines: CONFIG.user.defaultAvailableLines,
+      availableLines: 100,
     };
 
     try {
@@ -46,7 +47,9 @@ export const createGalaClickerBot = () => {
 
       await ctx.reply('Click the button below to start playing.', {
         reply_markup: {
-          inline_keyboard: [[{ text: 'Play Now', web_app: { url: env.FRONT_URL } }]],
+          inline_keyboard: [[{
+            text: 'Play Now',
+              web_app: { url: process.env.FRONT_URL || ''} }]],
         },
       });
     } catch (error) {
@@ -55,7 +58,6 @@ export const createGalaClickerBot = () => {
       await ctx.reply('Sorry, there was an error processing your request. Please try again later.');
     }
   });
-
   bot.on('text', async (ctx: Context) => {
     try {
       await ctx.reply(

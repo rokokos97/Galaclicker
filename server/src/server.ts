@@ -3,64 +3,71 @@ import cors from 'cors';
 import router from './routes/index';
 import { initDatabase, sequelize } from './database';
 import path from 'path';
-import { CONFIG, env } from './config';
 import { createGalaClickerBot } from './bots/galaClicker';
 import { createTriCalcBot } from './bots/tricalc';
 import chalk from 'chalk';
+import dotenv from 'dotenv';
 
+dotenv.config();
 
 const app = express();
 const bot = createGalaClickerBot();
 const botTricalc = createTriCalcBot();
 
-// Middleware
-app.use(cors(CONFIG.cors));
+const port = process.env.PORT || 8888;
+
+app.use(
+  cors({
+    methods: 'GET,POST,PUT,DELETE,OPTIONS',
+    allowedHeaders: 'Content-Type,Authorization',
+  }),
+);
 app.use(express.json());
 app.use('/api', router);
 
-// Serve static files
 app.use(express.static(path.join(__dirname, '../public')));
 
-// Serve index.html for the root route
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-// Health check endpoint
-app.get('/health', (_, res) => {
-  res.status(200).json({ status: 'OK' });
-});
+export default app;
 
-async function start(): Promise<void> {
+async function start (): Promise<void> {
   try {
     try {
       await initDatabase();
       console.log(chalk.green('Database connected successfully'));
-      // bot.launch();
-      // botTricalc.launch();
     } catch (error: any) {
-      console.error('Database connection failed:', error?.message || 'Unknown error');
+      console.error(
+        'Database connection failed:',
+        error?.message || 'Unknown error',
+      );
     }
-    try {
-      await Promise.all([
-        bot.launch(),
-        botTricalc.launch()
-      ]);
-      console.log('Bots started successfully');
-    } catch (error: any) {
-      console.error('Failed to start bots:', error?.message || 'Unknown error');
-    }
-    const server = app.listen(env.SERVER_PORT, '0.0.0.0', () => {
-      console.log(chalk.green(`Server is running on port ${env.SERVER_PORT}`));
-    });
-    server.on('error', (error: Error & { code?: string }) => {
-      if (error.code === 'EADDRINUSE') {
-        console.error(`Port ${env.SERVER_PORT} is already in use`);
-      } else {
-        console.error('Error starting server:', error);
+
+    // Only launch bots in production environment
+    if (process.env.NODE_ENV === 'production') {
+      try {
+        await Promise.all([bot.launch(), botTricalc.launch()]);
+        console.log(chalk.green('Bots launched successfully'));
+      } catch (error: any) {
+        console.error('Bot launch failed:', error?.message || 'Unknown error');
       }
-      process.exit(1);
-    });
+    }
+
+    if (process.env.NODE_ENV !== 'production') {
+      const server = app.listen(port, () => {
+        console.log(chalk.green(`Server is running on port ${port}`));
+      });
+      server.on('error', (error: Error & { code?: string }) => {
+        if (error.code === 'EADDRINUSE') {
+          console.error(`Port ${port} is already in use`);
+        } else {
+          console.error('Error starting server:', error);
+        }
+        process.exit(1);
+      });
+    }
 
     // Graceful shutdown
     const shutdown = async () => {
@@ -80,7 +87,7 @@ async function start(): Promise<void> {
 }
 
 // Start the application
-start().catch((error) => {
+start().catch(error => {
   console.error('Unhandled error during startup:', error);
   process.exit(1);
 });

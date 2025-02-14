@@ -1,8 +1,10 @@
 import { Sequelize } from 'sequelize';
-import { env, CONFIG } from './config';
 import chalk from 'chalk';
+import dotenv from 'dotenv';
 
-export const sequelize = new Sequelize(env.DATABASE_URL, {
+dotenv.config();
+
+export const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
   dialect: 'postgres',
   dialectOptions: {
     ssl: {
@@ -10,8 +12,15 @@ export const sequelize = new Sequelize(env.DATABASE_URL, {
       rejectUnauthorized: false
     }
   },
-  pool: CONFIG.database.pool,
-  retry: CONFIG.database.retry,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  },
+  retry:{
+    max: 3
+  },
   logging: process.env.NODE_ENV !== 'production',
 });
 
