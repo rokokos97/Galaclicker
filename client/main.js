@@ -1,286 +1,209 @@
+// import './style.css';
+
+// import { storeUserData, updateUserInfo, fetchAllUsers } from './api/userApi'
+
+// import { setupLeaderboard, initializeLeaderboard, displayLeaderboard } from './ui/leaderboard';
+
+// import { checkAndResetDailyScore,
+//     checkAndResetMonthlyScore,
+//     setScore,
+//     getScore,
+//     setDailyScore,
+//     getDailyScore,
+//     setMonthlyScore,
+//     getMonthlyScore,
+//     incrementScore
+// } from './game/score';
+
+// import { updateProgressBar,
+//     updateImageAndLevel,
+//     updateClicksLeft,
+//     updateAvailableLines,
+//     getAvailableLines,
+//  } from './game/gameState';
+
+//  import { getCurrentLevel } from './game/levels';
+
+// const tg = window.Telegram.WebApp;
+// const telegramUser = tg.initDataUnsafe.user;
+
+// if (telegramUser) {
+//     fetchUser(telegramUser.id).then((dbUser) => {
+//         if (dbUser) {
+//             console.log('DB user:', dbUser);
+//             storeUserData(dbUser);
+//             startGame();
+//         }
+//     });
+//     tg.expand();
+//     tg.ready();
+// } else {
+//     localStorage.setItem('userId', '007');
+//     localStorage.setItem('username', 'Test');
+//     localStorage.setItem('first_name', 'Test');
+//     localStorage.setItem('last_name', 'Test');
+//     localStorage.setItem('score', '0');
+//     localStorage.setItem('dailyScore', '0');
+//     localStorage.setItem('monthlyScore', '0');
+//     localStorage.setItem('lastUpdated', '');
+//     localStorage.setItem('lastUpdatedMonthly', '');
+//     localStorage.setItem('availableLines', '100');
+//     storeUserData({});
+//     initializeApp();
+//     runGame();
+//     console.error('User data not available run test game');
+// }
+
+// function resetScore(){
+//     checkAndResetDailyScore()
+//     checkAndResetMonthlyScore()
+
+//     setScore(getScore())
+//     setDailyScore(getDailyScore())
+//     setMonthlyScore(getMonthlyScore())
+
+//     updateGameUi()
+// }
+
+// function runGame(){
+//     resetScore();
+//     updateGameUi();
+//     handleUserUpdates();
+// }
+
+// function updateGameUi(){
+//     updateProgressBar();
+//     updateImageAndLevel();
+//     updateClicksLeft();
+//     updateAvailableLines();
+
+//     if (getAvailableLines() < getCurrentLevel(getScore()).maxLines) {
+//         recoverLines();
+//     }
+
+// }
+
+// function handleUserUpdates(){
+//     updateUserInfo();
+//     fetchAllUsers().then(users => displayLeaderboard(users));
+
+//     const $loading=document.querySelector("#loading-screen")
+//     const $navigation = document.querySelector("#navigation")
+
+//     if ($loading) $loading.style.display = 'none';
+//     document.getElementById('game').classList.add("active");
+//     if ($navigation) $navigation.style.display = 'block';
+
+// }
+
+// function initializeApp() {
+//     setupLeaderboard();
+//     initializeLeaderboard();
+
+//     const navLinks = document.querySelectorAll("nav ul li a")
+//     const sections = document.querySelectorAll(".section")
+
+//     navLinks.forEach(link => {
+//     link.addEventListener("click", (e) => {
+//         e.preventDefault();
+//         const targetSection = e.target.getAttribute("data-section");
+
+//         sections.forEach(section => {
+//         if (section.id === targetSection) {
+//             section.classList.add("active");
+//             } else {
+//             section.classList.remove("active");
+//             }
+//         });
+//         });
+//     });
+
+//     const images = document.querySelectorAll("img");
+//     images.forEach(img => {
+//         img.addEventListener('contextmenu', e => e.preventDefault())
+//         img.setAttribute('draggable', 'false');
+//     });
+
+//     const $circle = document.querySelector("#circle")
+//     $circle.addEventListener('click', (event) => {
+//         const rect = $circle.getBoundingClientRect()
+
+//         const offsetX = event.clientX - rect.left - rect.width / 2
+//         const offsetY = event.clientY - rect.top - rect.height / 2
+
+//         const DEG = 40
+
+//         const tiltX = (offsetY / rect.height) * DEG
+//         const tiltY = (offsetX / rect.width) * -DEG
+
+//         $circle.style.setProperty('--tiltX', `${tiltX}deg`)
+//         $circle.style.setProperty('--tiltY', `${tiltY}deg`)
+
+//         setTimeout (()=> {
+//             $circle.style.setProperty('--tiltX', `0deg`)
+//             $circle.style.setProperty('--tiltY', `0deg`)
+//         }, 200)
+
+//         const plusOne = document.createElement('div')
+//         plusOne.classList.add('plusOne')
+//         plusOne.textContent = `+${getCurrentLevel(getScore()).xlevel}`
+//         plusOne.style.left = `${event.clientX - rect.left}px`
+//         plusOne.style.top = `${event.clientY - rect.top}px`
+
+//         $circle.parentElement.appendChild(plusOne)
+
+//         incrementScore()
+
+//         setTimeout(() => {
+//             plusOne.remove()
+//         },2000)
+//     } )
+// }
+
 import './style.css';
-import { fetchUser, updateUser, fetchAllUsers } from './api/userApi';
-import { LEVELS } from './config/constants';
-import { setupLeaderboard, initializeLeaderboard } from './leaderboard';
 
+import { storeUserData, updateUserInfo, fetchAllUsers } from './api/userApi';
+import { setupLeaderboard, initializeLeaderboard, displayLeaderboard } from './ui/leaderboard';
+import { 
+    checkAndResetDailyScore, checkAndResetMonthlyScore, setScore, getScore, 
+    setDailyScore, getDailyScore, setMonthlyScore, getMonthlyScore, incrementScore 
+} from './game/score';
+import { 
+    updateProgressBar, updateImageAndLevel, updateClicksLeft, updateAvailableLines, getAvailableLines 
+} from './game/gameState';
+import { getCurrentLevel } from './game/levels';
 
+// Перевіряємо, чи підтримується Telegram WebApp
+const tg = window.Telegram?.WebApp;
+if (!tg) {
+    console.error('Telegram WebApp API недоступний!');
+} 
 
+const telegramUser = tg?.initDataUnsafe?.user;
 
-
-
-function initializeApp() {
-    setupLeaderboard();
-    initializeLeaderboard();
-    const navLinks = document.querySelectorAll("nav ul li a")
-    const sections = document.querySelectorAll(".section")
-
-    navLinks.forEach(link => {
-      link.addEventListener("click", (e) => {
-        e.preventDefault();
-        const targetSection = e.target.getAttribute("data-section");
-
-        sections.forEach(section => {
-          if (section.id === targetSection) {
-            section.classList.add("active");
-            } else {
-            section.classList.remove("active");
-          }
-        });
-        });
-    });
-
-    const images = document.querySelectorAll("img");
-      images.forEach(img => {
-        img.addEventListener('contextmenu', e => e.preventDefault())
-        img.setAttribute('draggable', 'false');
-      });
-
-    const $circle = document.querySelector("#circle")
-    const $score = document.querySelector("#score")
-    const $dailyScore = document.querySelector("#daily-score")
-    const $monthlyScore = document.querySelector("#monthly-score")
-    const $progressFill = document.querySelector("#progress-fill")
-    const $clicksLeft = document.querySelector("#clicks-left")
-    const $availableLines = document.querySelector("#available-lines")
-    const $loading=document.querySelector("#loading-screen")
-    const $navigation = document.querySelector("#navigation")
-
-
-    let availableLines = Number(localStorage.getItem('availableLines')) || 100
-    let recoveryInterval = null
-    let delayTimeout = null
-
-    function start (){
-        checkAndResetDailyScore()
-        checkAndResetMonthlyScore()
-
-        setScore(getScore())
-        setDailyScore(getDailyScore())
-        setMonthlyScore(getMonthlyScore())
-
-        updateProgressBar()
-        updateImageAndLevel()
-        updateClicksLeft()
-
-        updateAvailableLines()
-
-        if (availableLines < getCurrentLevel(getScore()).maxLines) {
-            recoveryInterval = setInterval(recoverLines, 1000);
-        }
-        updateUserInfo();
-
-        fetchAllUsers().then(users => displayLeaderboard(users));
-
-        $loading.style.display = 'none';
-        document.getElementById('game').classList.add("active");
-        $navigation.style.display = 'block';
+// Функція отримання користувача (припускаємо, що fetchUser потрібно імпортувати)
+async function fetchUser(userId) {
+    try {
+        const response = await fetch(`/api/users/${userId}`);
+        return response.ok ? await response.json() : null;
+    } catch (error) {
+        console.error('Помилка отримання даних користувача:', error);
+        return null;
     }
-
-    function setScore (score){
-        localStorage.setItem('score', score)
-        $score.textContent = score
-    }
-    function setDailyScore(score) {
-        localStorage.setItem('dailyScore', score)
-        $dailyScore.textContent = score
-    }
-
-    function setMonthlyScore(score) {
-        localStorage.setItem('monthlyScore', score)
-        $monthlyScore.textContent = score
-    }
-    function getScore (){
-        return Number(
-            localStorage && localStorage.getItem('score')) || 0
-    }
-    function getDailyScore() {
-        return Number(localStorage.getItem('dailyScore')) || 0
-    }
-    function getMonthlyScore() {
-        return Number(localStorage.getItem('monthlyScore')) || 0
-    }
-    function checkAndResetDailyScore() {
-        const lastUpdatedDaily = localStorage.getItem('lastUpdated')
-        const today = new Date().toISOString().split('T')[0];
-        if (lastUpdatedDaily !== today) {
-            localStorage.setItem('dailyScore', 0)
-            localStorage.setItem('lastUpdated', today)
-        }
-    }
-    function checkAndResetMonthlyScore() {
-        const lastUpdatedMonthly = localStorage.getItem('lastUpdatedMonthly')
-        const currentMonth = new Date().toISOString().split('T')[0].slice(0, 7)
-        if (lastUpdatedMonthly!==currentMonth) {
-            localStorage.setItem('monthlyScore', 0)
-            localStorage.setItem('lastUpdatedMonthly', currentMonth)
-        }
-    }
-    function addOne (){
-        if (availableLines > 0) {
-        const score = getScore()
-        const level = getCurrentLevel(score)
-        const newScore = getScore() + level.xlevel
-        const newDailyScore = getDailyScore() +level.xlevel
-        const newMonthlyScore = getMonthlyScore() + level.xlevel
-
-        availableLines -= 1
-        localStorage.setItem('availableLines', String(availableLines));
-
-        setScore(newScore)
-        setDailyScore(newDailyScore)
-        setMonthlyScore(newMonthlyScore)
-
-        updateProgressBar()
-        updateImageAndLevel()
-        updateClicksLeft()
-        updateAvailableLines()
-
-        const userBeforeUpdate = {
-            external_id_telegram: localStorage.getItem('external_id_telegram'),
-            first_name: localStorage.getItem('first_name'),
-            last_name: localStorage.getItem('last_name'),
-            username: localStorage.getItem('username'),
-            score: newScore,
-            dailyScore: localStorage.getItem('dailyScore'),
-            monthlyScore: localStorage.getItem('monthlyScore'),
-            lastUpdated: localStorage.getItem('lastUpdated'),
-            lastUpdatedMonthly:localStorage.getItem('lastUpdatedMonthly'),
-            availableLines: availableLines,
-        };
-        updateUserInfo()
-        console.log('userBeforeUpdate', userBeforeUpdate);
-        updateUser(userBeforeUpdate)
-
-        clearTimeout(delayTimeout)
-          clearInterval(recoveryInterval)
-
-          delayTimeout = setTimeout(() => {
-            recoveryInterval = setInterval(recoverLines, 500)
-          }, 5000)
-        } else {
-            $circle.classList.add('grayscale')
-            return
-        }
-    }
-    function updateProgressBar() {
-        const score = getScore()
-        const nextLevel = getNextLevel(score)
-        const prevLevel = getCurrentLevel(score)
-        const progress = (score - prevLevel.numberOfCodeLines) / (nextLevel.numberOfCodeLines - prevLevel.numberOfCodeLines) * 100
-
-        $progressFill.style.width = `${progress}%`
-    }
-    function updateClicksLeft() {
-        const score = getScore()
-        const nextLevel = getNextLevel(score)
-        const level = getCurrentLevel(score)
-        const clicksLeft = Math.ceil((nextLevel.numberOfCodeLines - score) / level.xlevel)
-        $clicksLeft.textContent = `Lines left level ${nextLevel.name}: ${clicksLeft}`
-    }
-    function updateImageAndLevel() {
-        const score = getScore()
-        const level = getCurrentLevel(score)
-        $circle.setAttribute('src', `${level.imgUrl}`)
-    }
-    function updateAvailableLines() {
-        const score = getScore()
-        const level = getCurrentLevel(score)
-        $availableLines.textContent = `${availableLines} / ${level.maxLines}`
-    }
-    function recoverLines() {
-        const score = getScore()
-        const level = getCurrentLevel(score)
-        if (availableLines < level.maxLines) {
-            availableLines += 1
-            localStorage.setItem('availableLines', availableLines);
-            updateAvailableLines()
-            // updateUser(telegramUser)
-            if (availableLines > 0) {
-                $circle.classList.remove('grayscale')
-              }
-        } else {
-            clearInterval(recoveryInterval)
-        }
-    }
-    function getCurrentLevel(score) {
-        return LEVELS.slice().reverse().find(level => score >= level.numberOfCodeLines) || LEVELS[0]
-    }
-    function getNextLevel(score) {
-        return LEVELS.find(level => score < level.numberOfCodeLines) || LEVELS[LEVELS.length - 1]
-    }
-    function updateUserInfo() {
-        const userInfoDiv = document.querySelector('.user__info');
-        const score = getScore();
-        const level = getCurrentLevel(score);
-        const first_name = localStorage.getItem('first_name');
-        const last_name = localStorage.getItem('last_name');
-
-        userInfoDiv.innerHTML = `
-            <p>Total Clicks: ${score}</p>
-            <p>Current Level: ${level.name}</p>
-            <p>First Name: ${first_name}</p>
-            <p>Last Name: ${last_name}</p>
-        `;
-    }
-
-    $circle.addEventListener('click', (event) => {
-        const rect = $circle.getBoundingClientRect()
-
-        const offsetX = event.clientX - rect.left - rect.width / 2
-        const offsetY = event.clientY - rect.top - rect.height / 2
-
-        const DEG = 40
-
-        const tiltX = (offsetY / rect.height) * DEG
-        const tiltY = (offsetX / rect.width) * -DEG
-
-        $circle.style.setProperty('--tiltX', `${tiltX}deg`)
-        $circle.style.setProperty('--tiltY', `${tiltY}deg`)
-
-         setTimeout (()=> {
-            $circle.style.setProperty('--tiltX', `0deg`)
-            $circle.style.setProperty('--tiltY', `0deg`)
-         }, 200)
-
-         const plusOne = document.createElement('div')
-         plusOne.classList.add('plusOne')
-         plusOne.textContent = `+${getCurrentLevel(getScore()).level}`
-         plusOne.style.left = `${event.clientX - rect.left}px`
-         plusOne.style.top = `${event.clientY - rect.top}px`
-
-         $circle.parentElement.appendChild(plusOne)
-
-         addOne()
-
-         setTimeout(() => {
-            plusOne.remove()
-         },2000)
-    } )
-    start()
 }
 
-const tg = window.Telegram.WebApp;
-const telegramUser = tg.initDataUnsafe.user;
 if (telegramUser) {
     fetchUser(telegramUser.id).then((dbUser) => {
         if (dbUser) {
             console.log('DB user:', dbUser);
-            localStorage.setItem('external_id_telegram', dbUser.external_id_telegram);
-            localStorage.setItem('username', dbUser.username);
-            localStorage.setItem('first_name', dbUser.first_name);
-            localStorage.setItem('last_name', dbUser.last_name);
-            localStorage.setItem('score', dbUser.score);
-            localStorage.setItem('dailyScore', dbUser.dailyScore);
-            localStorage.setItem('monthlyScore', dbUser.monthlyScore);
-            localStorage.setItem('lastUpdated', dbUser.lastUpdated);
-            localStorage.setItem('lastUpdatedMonthly', dbUser.lastUpdatedMonthly);
-            localStorage.setItem('availableLines', String(dbUser.availableLines));
-            initializeApp();
+            storeUserData(dbUser);
+            startGame();
         }
     });
     tg.expand();
     tg.ready();
 } else {
+    console.warn('Дані користувача Telegram недоступні. Використовується тестовий режим.');
     localStorage.setItem('userId', '007');
     localStorage.setItem('username', 'Test');
     localStorage.setItem('first_name', 'Test');
@@ -291,6 +214,90 @@ if (telegramUser) {
     localStorage.setItem('lastUpdated', '');
     localStorage.setItem('lastUpdatedMonthly', '');
     localStorage.setItem('availableLines', '100');
+    storeUserData({});
     initializeApp();
-    console.error('User data not available');
+    runGame();
+}
+
+function resetScore() {
+    checkAndResetDailyScore();
+    checkAndResetMonthlyScore();
+
+    updateGameUi();
+}
+
+function runGame() {
+    resetScore();
+    updateGameUi();
+    handleUserUpdates();
+}
+
+function updateGameUi() {
+    updateProgressBar();
+    updateImageAndLevel();
+    updateClicksLeft();
+    updateAvailableLines();
+
+    if (getAvailableLines() < getCurrentLevel(getScore()).maxLines) {
+        recoverLines();
+    }
+}
+
+async function handleUserUpdates() {
+    updateUserInfo();
+    const users = await fetchAllUsers();
+    displayLeaderboard(users);
+
+    document.getElementById('loading-screen')?.style.setProperty('display', 'none');
+    document.getElementById('navigation')?.style.setProperty('display', 'block');
+    document.getElementById('game')?.classList.add("active");
+}
+
+function initializeApp() {
+    setupLeaderboard();
+    initializeLeaderboard();
+
+    document.querySelectorAll("nav ul li a").forEach(link => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetSection = e.target.getAttribute("data-section");
+
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.toggle("active", section.id === targetSection);
+            });
+        });
+    });
+
+    document.querySelectorAll("img").forEach(img => {
+        img.addEventListener('contextmenu', e => e.preventDefault());
+        img.setAttribute('draggable', 'false');
+    });
+
+    const $circle = document.querySelector("#circle");
+    $circle.addEventListener('click', (event) => {
+        const rect = $circle.getBoundingClientRect();
+        const offsetX = event.clientX - rect.left - rect.width / 2;
+        const offsetY = event.clientY - rect.top - rect.height / 2;
+        const DEG = 40;
+
+        $circle.style.transform = `rotateX(${(offsetY / rect.height) * DEG}deg) rotateY(${(offsetX / rect.width) * -DEG}deg)`;
+
+        setTimeout(() => {
+            $circle.style.transform = '';
+        }, 200);
+
+        const plusOne = document.createElement('div');
+        plusOne.classList.add('plusOne');
+        plusOne.textContent = `+${getCurrentLevel(getScore()).xlevel}`;
+        plusOne.style.left = `${event.clientX - rect.left}px`;
+        plusOne.style.top = `${event.clientY - rect.top}px`;
+
+        $circle.parentElement.appendChild(plusOne);
+
+        incrementScore();
+
+        setTimeout(() => {
+            plusOne.remove();
+        }, 2000);
+    });
 }

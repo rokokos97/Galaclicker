@@ -1,3 +1,22 @@
+@keyframes loading {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes move-up {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-80px);
+  }
+}
 html, body {
   display: flex;
   flex-direction: column;
@@ -93,7 +112,7 @@ footer ul li a {
   margin: 0;
   padding: 2px 4px;
   border-radius: 20%;
-  /* border: #F7B84B solid 0.5px */
+  border: #F7B84B solid 0.5px
 }
 .head__score-sections {
   width: 100%;
@@ -195,7 +214,7 @@ footer ul li a {
   background: linear-gradient(90deg, #504e45, #fcbd02);
   transition: width 0.2s ease;
 }
-.plusone {
+.plusOne {
   position: absolute ;
   font-family: Inter;
   text-shadow: 0px 0px 16px 0px rgb(247, 184, 75, 1);
@@ -317,7 +336,7 @@ table th {
 
 .leaderboard__table {
   margin: 0 auto;
-  width: 80%; /* Adjust as needed */
+  width: 80%
 }
 .leaderboard__item {
   display: flex;
@@ -325,22 +344,4 @@ table th {
   align-items: center;
   gap: 10px;
 }
-@keyframes loading {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
 
-@keyframes move-up {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-80px);
-  }
-}

@@ -1,4 +1,4 @@
-import { fetchAllUsers } from './api/userApi';
+import { fetchAllUsers } from '../api/userApi';
 
 export function displayLeaderboard(users) {
     const sortedUsers = users.sort((a, b) => b.score - a.score);
@@ -19,5 +19,7 @@ export function setupLeaderboard() {
 }
 
 export function initializeLeaderboard() {
-    fetchAllUsers().then(users => displayLeaderboard(users));
+    fetchAllUsers().then(users => {
+        console.log(users)
+        return displayLeaderboard(users)});
 }

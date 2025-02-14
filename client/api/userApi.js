@@ -1,10 +1,13 @@
-const SERVER_USERS_URL = import.meta.env.VITE_SERVER_USERS_URL;
+import { getScore } from "../game/score";
+import { getCurrentLevel } from "../game/levels";
+
+const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
 export async function updateUser(updatedUser) {
     console.log('Updated USER', updatedUser)
     console.log('Updated USER ID', updatedUser.external_id_telegram)
     try {
-        const response = await fetch(`${SERVER_USERS_URL}${updatedUser.external_id_telegram}`, {
+        const response = await fetch(`${SERVER_URL}/api/users/${updatedUser.external_id_telegram}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -19,9 +22,10 @@ export async function updateUser(updatedUser) {
         return { error: 'Error updating user data' }
     }
 }
+
 export async function fetchUser(userId) {
     try {
-        let response = await fetch(`${SERVER_USERS_URL}${userId}`)
+        let response = await fetch(`${SERVER_URL}/api/users/${userId}`)
         if (!response.ok) {
             throw new Error(`Request error! status: ${response.status}`);
         }
@@ -31,10 +35,9 @@ export async function fetchUser(userId) {
     }
 }
 
-
 export async function fetchAllUsers() {
     try {
-        let response = await fetch(`${SERVER_USERS_URL}`)
+        let response = await fetch(`${SERVER_URL}/api/users`)
         if (!response.ok) {
             throw new Error(`Request error! status: ${response.status}`);
         }
@@ -42,6 +45,34 @@ export async function fetchAllUsers() {
     } catch (error) {
         console.error('Error fetching user:', error)
     }
+}
+
+export function updateUserInfo() {
+    const userInfoDiv = document.querySelector('.user__info');
+    const score = getScore();
+    const level = getCurrentLevel(score);
+    const first_name = localStorage.getItem('first_name');
+    const last_name = localStorage.getItem('last_name');
+
+    userInfoDiv.innerHTML = `
+        <p>Total Clicks: ${score}</p>
+        <p>Current Level: ${level.name}</p>
+        <p>First Name: ${first_name}</p>
+        <p>Last Name: ${last_name}</p>
+    `;
+}
+
+export function storeUserData(user){
+    localStorage.setItem('external_id_telegram', user.external_id_telegram || '007');
+    localStorage.setItem('username', user.username || 'Test');
+    localStorage.setItem('first_name', user.first_name || 'Test');
+    localStorage.setItem('last_name', user.last_name || 'Test');
+    localStorage.setItem('score', user.score || '0');
+    localStorage.setItem('dailyScore', user.dailyScore || '0');
+    localStorage.setItem('monthlyScore', user.monthlyScore || '0');
+    localStorage.setItem('lastUpdated', user.lastUpdated || '');
+    localStorage.setItem('lastUpdatedMonthly', user.lastUpdatedMonthly || '');
+    localStorage.setItem('availableLines', String(user.availableLines || '100'));
 }
 
 // async function fetchLevels() {
