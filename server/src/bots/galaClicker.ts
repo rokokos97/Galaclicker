@@ -11,6 +11,9 @@ export const createGalaClickerBot = () => {
   }
 
   const bot = new Telegraf(`${process.env.TELEGRAM_TOKEN_GALA}`);
+  if (!process.env.TELEGRAM_TOKEN_GALA) {
+    throw new Error('TELEGRAM_TOKEN_GALA is not defined');
+  }
   bot.start(async (ctx: Context) => {
     if (!ctx.message?.from) {
       await ctx.reply('Sorry, there was an error processing your request.');
@@ -38,7 +41,7 @@ export const createGalaClickerBot = () => {
       });
 
       if (!user) {
-        user = await UserModel.create(dataUser as any);  // TODO: Fix type definition
+        user = await UserModel.create(dataUser as any);
       } else {
         await ctx.reply(
           `${dataUser.first_name} ${dataUser.last_name} welcome back to the game!`,

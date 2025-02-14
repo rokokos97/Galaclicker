@@ -18,8 +18,13 @@ const port = process.env.PORT || 8888;
 
 app.use(
   cors({
+    origin: [
+      'https://gala-clicker.vercel.app',
+      'https://rokokos97.github.io'
+    ],
     methods: 'GET,POST,PUT,DELETE,OPTIONS',
     allowedHeaders: 'Content-Type,Authorization',
+    credentials: true
   }),
 );
 app.use(express.json());
@@ -43,6 +48,7 @@ async function start (): Promise<void> {
         'Database connection failed:',
         error?.message || 'Unknown error',
       );
+      process.abort();
     }
 
     // Only launch bots in production environment
