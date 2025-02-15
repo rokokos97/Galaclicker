@@ -1,37 +1,26 @@
-import { Sequelize } from 'sequelize';
 import chalk from 'chalk';
-import dotenv from 'dotenv';
-
-dotenv.config();
-
-export const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
-  dialect: 'postgres',
-  dialectOptions: {
-    ssl: {
-      require: true,
-      rejectUnauthorized: false
-    }
-  },
-  pool: {
-    max: 3,
-    min: 0,
-    acquire: 30000,
-    idle: 10000
-  },
-  retry:{
-    max: 3
-  },
-  logging: process.env.NODE_ENV !== 'production',
-});
+import { sequelize } from './config/sequelize.js';
+import Level from './models/level.js';
+import { Levels } from './mock/levels.js';
 
 export async function initDatabase(): Promise<void> {
   try {
     await sequelize.authenticate();
-    console.log(chalk.green('Database connection has been established successfully.'));
+    console.log(
+      chalk.green('Database connection has been established successfully.'),
+    );
     await sequelize.sync();
     console.log('Database models synchronized successfully.');
+
+    const existingLevels = await Level.findAll();
+    if (existingLevels.length === 0) {
+      await Level.bulkCreate(Levels);
+      console.log(chalk.green('Levels initialized successfully'));
+    }
   } catch (error) {
     console.error('Unable to connect to the database:', error);
     throw error;
   }
 }
+
+export { sequelize };

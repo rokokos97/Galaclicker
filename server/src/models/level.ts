@@ -1,37 +1,38 @@
-import { DataTypes } from 'sequelize';
-import { sequelize } from '../database';
+import { DataTypes, type Model } from 'sequelize';
+import { sequelize } from '../config/sequelize.js';
+import { type ILevel } from '../interfaces.js';
 
-const Level = sequelize.define(
+const Level = sequelize.define<Model<ILevel>>(
   'Level',
   {
     id: {
       type: DataTypes.INTEGER,
-      autoIncrement: true,
       primaryKey: true,
       allowNull: false,
     },
-    external_id: {
-      type: DataTypes.STRING,
-    },
     name: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     numberOfCodeLines: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     imgUrl: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     xlevel: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
     maxLines: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
+      allowNull: false,
     },
   },
   {
     timestamps: true,
-    tableName: 'Levels',
   },
 );
 

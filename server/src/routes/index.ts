@@ -1,7 +1,7 @@
 import express from 'express';
-import usersRoutes from './users.routes';
-import levelsRoutes from './levels.routes';
-import leaderbordRoutes from './leaderbord.routes';
+import usersRoutes from './users.routes.js';
+import levelsRoutes from './levels.routes.js';
+import leaderbordRoutes from './leaderbord.routes.js';
 
 const router = express.Router({ mergeParams: true });
 

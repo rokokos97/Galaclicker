@@ -37,11 +37,11 @@ export interface IUserInput {
 }
 
 export interface ILevel {
-  id?: number;
-  external_id: string;
+  external_id?: string;
+  id: number;
   name: string;
-  numberOfCodeLines: string;
+  numberOfCodeLines: number;
   imgUrl: string;
-  xlevel: string;
-  maxLines: string;
+  xlevel: number;
+  maxLines: number;
 }

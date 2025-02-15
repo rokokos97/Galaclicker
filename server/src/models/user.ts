@@ -1,7 +1,8 @@
-import { DataTypes } from 'sequelize';
-import { sequelize } from '../database';
+import { DataTypes, type Model } from 'sequelize';
+import { sequelize } from '../config/sequelize.js';
+import { type IUser } from '../interfaces.js';
 
-const User = sequelize.define(
+const User = sequelize.define<Model<IUser>>(
   'User',
   {
     id: {

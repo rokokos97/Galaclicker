@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from 'express';
-import UserModel from '../models/user';
-import { handleError } from '../utils/handleError';
-import { type IUserInput, type IUser } from '../interfaces';
+import UserModel from '../models/user.js';
+import { handleError } from '../utils/handleError.js';
+import { type IUserInput, type IUser } from '../interfaces.js';
 import { type Model } from 'sequelize';
 
 type UserInstance = Model<IUser, IUserInput>;

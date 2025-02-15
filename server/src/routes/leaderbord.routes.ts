@@ -1,9 +1,9 @@
 import express, { type Request, type Response } from 'express';
 import { Telegraf } from 'telegraf';
-import UserModel from '../models/user';
-import { handleError } from '../utils/handleError';
-import { type IUser, type IUserInput } from '../interfaces';
-import { Op, type Model } from 'sequelize';
+import UserModel from '../models/user.js';
+import { handleError } from '../utils/handleError.js';
+import { type IUser, type IUserInput } from '../interfaces.js';
+import { type Model } from 'sequelize';
 
 const leaderbordRouter = express.Router({ mergeParams: true });
 type UserInstance = Model<IUser, IUserInput>;

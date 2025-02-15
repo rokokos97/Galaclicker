@@ -1,7 +1,7 @@
 import express, { type Request, type Response } from 'express';
-import LevelModel from '../models/level';
-import { type ILevel } from '../interfaces';
-import { handleError } from '../utils/handleError';
+import LevelModel from '../models/level.js';
+import { type ILevel } from '../interfaces.js';
+import { handleError } from '../utils/handleError.js';
 import { type Model } from 'sequelize';
 
 type LevelInterface = Model<ILevel>;
@@ -22,7 +22,7 @@ levelsRouter.get('/', async (req: Request, res: Response) => {
 
 levelsRouter.post('/', async (req: Request, res: Response) => {
   const newLevel: ILevel = req.body as ILevel;
-  const id: string = newLevel.external_id;
+  const id: number = newLevel.id;
   try {
     const existingLevel: LevelInterface | null = await LevelModel.findOne({
       where: { external_id: id },
