@@ -460,3 +460,4 @@ server/.env.*
 # TypeScript
 *.tsbuildinfo
 tsconfig.tsbuildinfo
+.vercel

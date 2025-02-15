@@ -72,8 +72,16 @@ async function start (): Promise<void> {
         }
       }
 
-
-    // Graceful shutdown
+      const server = app.listen(port, () => {
+        console.log(chalk.green(`🚀 Server is running on port ${port}`));
+      });
+  
+      server.on('error', (error) => {
+        console.error(chalk.red('❌ Server error:', error));
+        process.exit(1);
+      });
+    
+      
     const shutdown: () => Promise<void> = async () => {
       console.log('Shutting down gracefully...');
       try {
@@ -110,8 +118,8 @@ async function start (): Promise<void> {
 }
 
 // Start the application
-start().then(()=>console.log(chalk.green('Server start successfully'))
-).catch((error: unknown) => {
-  console.error('Unhandled error during startup:', error);
+start().then(() => console.log(chalk.green('✅ Server started successfully')))
+.catch((error) => {
+  console.error(chalk.red('❌ Unhandled error during startup:', error));
   process.exit(1);
 });
