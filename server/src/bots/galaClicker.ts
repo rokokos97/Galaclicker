@@ -5,27 +5,22 @@ import UserModel from '../models/user.js';
 import { type IUserInput, type IUser } from '../interfaces.js';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+
 dotenv.config();
+console.log(chalk.yellow(`${process.env.FRONT_URL}`))
+console.log(chalk.yellow(`${process.env.TELEGRAM_TOKEN_GALA}`))
+
 
 export const createGalaClickerBot = (): Telegraf => {
-  if (
-    process.env.FRONT_URL !== null &&
-    process.env.FRONT_URL !== undefined &&
-    process.env.FRONT_URL !== ''
-  ) {
-    console.error(chalk.red('FRONT_URL environment variable is not defined'));
-  }
 
   const bot = new Telegraf(`${process.env.TELEGRAM_TOKEN_GALA}`);
   if (
-    process.env.TELEGRAM_TOKEN_GALA !== null &&
-    process.env.TELEGRAM_TOKEN_GALA !== undefined &&
-    process.env.TELEGRAM_TOKEN_GALA !== ''
+    !process.env.TELEGRAM_TOKEN_GALA
   ) {
     console.error(chalk.red('TELEGRAM_TOKEN_GALA is not defined'));
   }
   bot.start(async (ctx: Context) => {
-    if (ctx.message?.from !== null) {
+    if (!ctx.message?.from) {
       await ctx.reply('Sorry, there was an error processing your request.');
       return;
     }

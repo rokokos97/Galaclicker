@@ -1,20 +1,26 @@
 import express from 'express';
 import cors from 'cors';
-import router from './routes/index';
-import { initDatabase, sequelize } from './database';
 import path from 'path';
-import { createGalaClickerBot } from './bots/galaClicker';
-import { createTriCalcBot } from './bots/tricalc';
 import chalk from 'chalk';
 import dotenv from 'dotenv';
+import router from './routes/index.js';
+import { createTriCalcBot } from './bots/tricalc.js';
+import { initDatabase, sequelize } from './database.js';
+import { createGalaClickerBot } from './bots/galaClicker.js';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
+
 
 const app = express();
 const bot = createGalaClickerBot();
 const botTricalc = createTriCalcBot();
 
-const port = process.env.PORT != null || 8888;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const port = process.env.PORT ?? 8888;
+console.log(chalk.gray(port))
 
 app.use(
   cors({
@@ -35,56 +41,63 @@ app.get('/', (req, res) => {
 
 export default app;
 
-async function start(): Promise<void> {
+async function start (): Promise<void> {
   try {
     try {
       await initDatabase();
       console.log(chalk.green('Database connected successfully'));
     } catch (error: unknown) {
-      console.error(
-        chalk.red('Database connection failed:', error || 'Unknown error'),
-      );
-      process.abort();
-    }
-
-    const startServerAndBots = async (): Promise<void> => {
-      try {
-        if (process.env.NODE_ENV === 'production') {
-          await Promise.all([bot.launch(), botTricalc.launch()]);
-          console.log(chalk.green('Bots launched successfully'));
-        } else {
-          const server = app.listen(port, () => {
-            console.log(chalk.green(`Server is running on port ${port}`));
-          });
-
-          server.on('error', (error: Error & { code?: string }) => {
-            if (error.code === 'EADDRINUSE') {
-              console.error(chalk.red(`Port ${port} is already in use`));
-            } else {
-              console.error(chalk.red('Error starting server:', error));
-            }
-            process.exit(1);
-          });
-        }
-      } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error(chalk.red('Database connection failed:', error.message));
+      } else {
         console.error(
           chalk.red(
-            '❌ Server/Bot startup failed:',
-            error instanceof Error ? error.message : JSON.stringify(error),
+            'Database connection failed: Unknown error',
+            JSON.stringify(error),
           ),
         );
       }
-    };
+      process.abort();
+    }
+    // Only launch bots in production environment
+      try {
+        console.log('Launch bot')
+        await Promise.all([bot.launch()]);
+        console.log(chalk.green('Bots launched successfully'));
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error(chalk.red('Bot launch failed:', error.message));
+        } else {
+          console.error(chalk.red('Bot launch failed:', 'Unknown error'));
+        }
+      }
 
-    // Викликаємо функцію запуску
-    startServerAndBots();
 
     // Graceful shutdown
     const shutdown: () => Promise<void> = async () => {
       console.log('Shutting down gracefully...');
-      bot.stop('SIGTERM');
-      botTricalc.stop('SIGTERM');
-      await sequelize.close();
+      try {
+        await Promise.all([
+          new Promise<void>(resolve => {
+            bot.stop('SIGTERM');
+            resolve();
+          }),
+          new Promise<void>(resolve => {
+            botTricalc.stop('SIGTERM');
+            resolve();
+          }),
+          sequelize.close(),
+        ]);
+        console.log(chalk.yellow('All resources closed successfully'));
+      } catch (error: unknown) {
+        if (error instanceof Error) {
+          console.error(chalk.red('Error during shutdown:', error.message));
+        } else {
+          console.error(
+            chalk.red('Error during shutdown:', JSON.stringify(error)),
+          );
+        }
+      }
       process.exit(0);
     };
 
@@ -97,7 +110,8 @@ async function start(): Promise<void> {
 }
 
 // Start the application
-start().catch((error: unknown) => {
+start().then(()=>console.log(chalk.green('Server start successfully'))
+).catch((error: unknown) => {
   console.error('Unhandled error during startup:', error);
   process.exit(1);
 });
