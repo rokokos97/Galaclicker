@@ -1,5 +1,4 @@
-import { type ILevel } from '../interfaces.js';
-export const Levels: ILevel[] = [
+const Levels = [
   {
     id: 1,
     name: 'Student',
@@ -30,7 +29,7 @@ export const Levels: ILevel[] = [
     numberOfCodeLines: 1000000,
     imgUrl: './galaMiddle.webp',
     xlevel: 10,
-    maxLines: 400,
+    maxLines: 300,
   },
   {
     id: 5,
@@ -38,22 +37,24 @@ export const Levels: ILevel[] = [
     numberOfCodeLines: 10000000,
     imgUrl: './galaSenior.webp',
     xlevel: 15,
-    maxLines: 600,
+    maxLines: 400,
   },
   {
     id: 6,
-    name: 'Team Lead',
+    name: 'Lead',
     numberOfCodeLines: 100000000,
-    imgUrl: './galaTeamLead.webp',
-    xlevel: 25,
-    maxLines: 800,
+    imgUrl: './galaLead.webp',
+    xlevel: 20,
+    maxLines: 500,
   },
   {
     id: 7,
-    name: 'Google',
+    name: 'Architect',
     numberOfCodeLines: 1000000000,
-    imgUrl: './galaGoogle.webp',
-    xlevel: 50,
+    imgUrl: './galaArchitect.webp',
+    xlevel: 25,
     maxLines: 999,
   },
 ];
+
+module.exports = { Levels };

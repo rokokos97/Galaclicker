@@ -1,12 +1,12 @@
-import { DataTypes, type Model } from 'sequelize';
-import { sequelize } from '../config/sequelize.js';
-import { type ILevel } from '../interfaces.js';
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/sequelize');
 
-const Level = sequelize.define<Model<ILevel>>(
+const Level = sequelize.define(
   'Level',
   {
     id: {
       type: DataTypes.INTEGER,
+      autoIncrement: true,
       primaryKey: true,
       allowNull: false,
     },
@@ -36,4 +36,4 @@ const Level = sequelize.define<Model<ILevel>>(
   },
 );
 
-export default Level;
+module.exports = Level;

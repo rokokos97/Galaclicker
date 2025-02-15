@@ -1,8 +1,7 @@
-import { DataTypes, type Model } from 'sequelize';
-import { sequelize } from '../config/sequelize.js';
-import { type IUser } from '../interfaces.js';
+const { DataTypes } = require('sequelize');
+const { sequelize } = require('../config/sequelize');
 
-const User = sequelize.define<Model<IUser>>(
+const User = sequelize.define(
   'User',
   {
     id: {
@@ -36,24 +35,25 @@ const User = sequelize.define<Model<IUser>>(
       defaultValue: 0,
     },
     lastUpdated: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
     lastUpdatedMonthly: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
+      defaultValue: DataTypes.NOW,
     },
     availableLines: {
       type: DataTypes.INTEGER,
-      defaultValue: 100,
+      defaultValue: 0,
     },
     previousRank: {
       type: DataTypes.INTEGER,
-      defaultValue: 999,
+      defaultValue: 0,
     },
   },
   {
     timestamps: true,
-    tableName: 'Users',
   },
 );
 
-export default User;
+module.exports = User;

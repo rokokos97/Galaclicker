@@ -1,9 +1,9 @@
-import chalk from 'chalk';
-import { sequelize } from './config/sequelize.js';
-import Level from './models/level.js';
-import { Levels } from './mock/levels.js';
+const chalk = require('chalk');
+const { sequelize } = require('./config/sequelize');
+const Level = require('./models/level');
+const { Levels } = require('./mock/levels');
 
-export async function initDatabase(): Promise<void> {
+async function initDatabase() {
   try {
     await sequelize.authenticate();
     console.log(
@@ -23,4 +23,4 @@ export async function initDatabase(): Promise<void> {
   }
 }
 
-export { sequelize };
+module.exports = { sequelize, initDatabase };
