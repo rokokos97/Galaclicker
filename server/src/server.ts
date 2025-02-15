@@ -39,7 +39,14 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
-export default app;
+const server = app.listen(port, () => {
+  console.log(chalk.green(`🚀 Server is running on port ${port}`));
+});
+
+server.on('error', (error) => {
+  console.error(chalk.red('❌ Server error:', error));
+  process.exit(1);
+});
 
 async function start (): Promise<void> {
   try {
