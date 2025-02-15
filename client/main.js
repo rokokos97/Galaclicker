@@ -27,6 +27,7 @@ import { updateProgressBar,
 
 const tg = window.Telegram.WebApp;
 const telegramUser = tg.initDataUnsafe.user;
+console.log('telegramUser', telegramUser);
 
 if (telegramUser) {
     fetchUser(telegramUser.id).then((dbUser) => {
