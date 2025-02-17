@@ -11,7 +11,7 @@ const { galaClickerBot } = require('./bots/galaClicker');
 const app = express();
 const botTricalc = createTriCalcBot();
 
-const PORT = process.env.PORT ?? 8888;
+const PORT = process.env.PORT || 8888;
 
 
 app.use(express.json());

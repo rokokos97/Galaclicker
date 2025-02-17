@@ -60,28 +60,6 @@ async function galaClickerBot() {
       },
     });
   });
-  // bot.command('score', async (ctx) => {
-  //   if (!ctx.message?.from?.id) {
-  //     await ctx.reply('Sorry, there was an error processing your request.');
-  //     return;
-  //   }
-
-  //   try {
-  //     const user = await User.findOne({
-  //       where: { external_id_telegram: ctx.message.from.id.toString() },
-  //     });
-
-  //     if (!user) {
-  //       await ctx.reply('Please start the bot first with /start command.');
-  //       return;
-  //     }
-
-  //     await ctx.reply(`Your current score is ${user.score}.`);
-  //   } catch (error) {
-  //     console.error('Error in score command:', error);
-  //     await ctx.reply('Sorry, there was an error processing your request.');
-  //   }
-  // });
   await bot.launch();
   console.log(chalk.green('Gala-clicker bot successfully launched!'));
   return bot;
