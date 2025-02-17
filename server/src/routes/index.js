@@ -40,4 +40,15 @@ router.get('/leaderboard', async (req, res) => {
   }
 });
 
+// Get user by ID
+
+router.get('/users/:id', async (req, res) => {
+    try {
+        const user = await User.findByPk(req.params.id);
+        res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;
