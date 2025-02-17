@@ -1,23 +1,20 @@
 import { fetchUser } from "./api/userApi";
 import { storeUserData } from "./api/userApi";
-import { runGame } from "./main"
-import { initializeLeaderboard } from "./ui/leaderboard";
 
-export function initUser() {
+export function initUser(telegramUser) {
     const tg = window.Telegram?.WebApp;
-    if (!tg || !tg.initDataUnsafe?.user) {
+    if (!telegramUser) {
         console.warn('❗ Telegram WebApp API недоступний або користувач не авторизований.');
         startTestMode();
         return;
     }
 
-    const telegramUserId = tg.initDataUnsafe.user.id;
     // const telegramUserId = 244718113;
     
-    console.log(`🔍 Initializing user with ID: ${telegramUserId}...`);
-    localStorage.setItem('external_id_telegram', telegramUserId);
+    console.log(`🔍 Initializing user with ID: ${telegramUser}...`);
+    localStorage.setItem('external_id_telegram', telegramUser);
 
-    fetchUser(telegramUserId)
+    fetchUser(telegramUser)
         .then((dbUser) => {
             if (!dbUser || typeof dbUser !== 'object') {
                 throw new Error('Invalid user data received');

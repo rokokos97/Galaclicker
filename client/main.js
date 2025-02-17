@@ -34,7 +34,7 @@ console.log("telegramUser", telegramUser)
 
 
 if (telegramUser) {
-    initUser();
+    initUser(telegramUser);
     initializeApp();
     runGame();
 } else {
