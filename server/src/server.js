@@ -4,15 +4,12 @@ const cors = require('cors');
 const path = require('path');
 const chalk = require('chalk');
 const router = require('./routes/index');
-const { createTriCalcBot } = require('./bots/tricalc');
-const { initDatabase, sequelize } = require('./config/database');
+const { initDatabase } = require('./config/database');
 const { galaClickerBot } = require('./bots/galaClicker');
 
 const app = express();
-const botTricalc = createTriCalcBot();
 
 const PORT = process.env.PORT || 8888;
-
 
 app.use(express.json());
 app.use('/api', router);
@@ -25,7 +22,7 @@ app.use(
   }),
 );
 
-if(process.env.NODE_ENV === 'production'){
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../public')));
 
   app.get('/', (req, res) => {
@@ -45,22 +42,16 @@ async function start() {
     process.exit(1);
   }
 
-    const shutdown = async () => {
-      console.log('Shutting down gracefully...');
-      try {
-        app.shutdown();
-        console.log(chalk.yellow('All resources closed successfully'));
-      } catch (error) {
-        console.error(
-          chalk.red(
-            'Error during shutdown',
-          )
-        );
-      }
-      process.exit(0);
-    };
+  // const shutdown = async () => {
+  //   console.log('Shutting down gracefully...');
+  //   try {
+  //     app.shutdown();
+  //     console.log(chalk.yellow('All resources closed successfully'));
+  //   } catch (error) {
+  //     console.error(chalk.red('Error during shutdown', error));
+  //   }
+  //   process.exit(0);
+  // };
 }
 
 start();
-
-module.exports = app;

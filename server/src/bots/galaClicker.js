@@ -27,8 +27,8 @@ async function galaClickerBot() {
       last_name: incomeUser.last_name ?? 'Unknown',
     };
 
-    const webAppUrl = `${process.env.FRONT_URL}?userId=${incomeUser.id.toString()}`
-    console.log(webAppUrl)
+    const webAppUrl = `${process.env.FRONT_URL}?userId=${incomeUser.id.toString()}`;
+    console.log(webAppUrl);
     try {
       const user = await User.findOne({
         where: { external_id_telegram: dataUser.external_id_telegram },
@@ -53,7 +53,9 @@ async function galaClickerBot() {
           [
             {
               text: '🚀 Запустити гру',
-              web_app: { url: process.env.FRONT_URL || 'https://gala-clicker.vercel.app' },
+              web_app: {
+                url: process.env.FRONT_URL || 'https://gala-clicker.vercel.app',
+              },
             },
           ],
         ],

@@ -27,7 +27,7 @@ import { getCurrentLevel } from './game/levels';
 import { initUser } from './initUser';
 
 const tg = window.Telegram.WebApp;
-const telegramUser = tg.initDataUnsafe.user;
+const telegramUser = tg.initDataUnsafe.user.id;
 console.log("telegramUser", telegramUser)
 
 if (telegramUser) {
@@ -159,12 +159,12 @@ function initializeApp() {
 
 // import { storeUserData, updateUserInfo, fetchAllUsers } from './api/userApi';
 // import { setupLeaderboard, initializeLeaderboard, displayLeaderboard } from './ui/leaderboard';
-// import { 
-//     checkAndResetDailyScore, checkAndResetMonthlyScore, setScore, getScore, 
-//     setDailyScore, getDailyScore, setMonthlyScore, getMonthlyScore, incrementScore 
+// import {
+//     checkAndResetDailyScore, checkAndResetMonthlyScore, setScore, getScore,
+//     setDailyScore, getDailyScore, setMonthlyScore, getMonthlyScore, incrementScore
 // } from './game/score';
-// import { 
-//     updateProgressBar, updateImageAndLevel, updateClicksLeft, updateAvailableLines, getAvailableLines 
+// import {
+//     updateProgressBar, updateImageAndLevel, updateClicksLeft, updateAvailableLines, getAvailableLines
 // } from './game/gameState';
 // import { getCurrentLevel } from './game/levels';
 
@@ -172,7 +172,7 @@ function initializeApp() {
 // const tg = window.Telegram?.WebApp;
 // if (!tg) {
 //     console.error('Telegram WebApp API недоступний!');
-// } 
+// }
 
 // const telegramUser = tg?.initDataUnsafe?.user;
 

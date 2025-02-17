@@ -6,7 +6,7 @@ dotenv.config();
 
 function createTriCalcBot() {
   const bot = new Telegraf(process.env.TELEGRAM_TOKEN_TRICALC);
-  
+
   if (!process.env.TELEGRAM_TOKEN_TRICALC) {
     console.error(chalk.red('TELEGRAM_TOKEN_TRICALC is not defined'));
   }
