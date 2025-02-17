@@ -23,22 +23,15 @@ import { updateProgressBar,
     startRecoveryProcess,
  } from './game/gameState';
 
- import { getCurrentLevel } from './game/levels';
+import { getCurrentLevel } from './game/levels';
+import { initUser } from './initUser';
 
 const tg = window.Telegram.WebApp;
-const telegramUser = tg.initDataUnsafe.user;
-console.log('telegramUser', telegramUser);
+const telegramUser = tg.initDataUnsafe.user.id;
+localStorage.setItem('external_id_telegram', telegramUser)
 
 if (telegramUser) {
-    fetchUser(telegramUser.id).then((dbUser) => {
-        if (dbUser) {
-            console.log('DB user:', dbUser);
-            storeUserData(dbUser);
-            startGame();
-        }
-    });
-    tg.expand();
-    tg.ready();
+    initUser();
 } else {
     localStorage.setItem('userId', '007');
     localStorage.setItem('username', 'Test');

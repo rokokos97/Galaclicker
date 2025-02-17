@@ -5,8 +5,10 @@
   "main": "src/server.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js"
+    "start": "npm start",
+    "dev": "nodemon src/server.js",
+    "build": "echo",
+    "vercel-build": "npm run build"
   },
   "keywords": [],
   "author": "lisovyi.rostyslav@gmail.com",
@@ -16,12 +18,14 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "pg": "^8.13.1",
-    "pg-hstore": "^2.3.4",
+    "pg": "^8.13.3",
     "sequelize": "^6.37.3",
     "telegraf": "^4.16.3"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"
+  },
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
