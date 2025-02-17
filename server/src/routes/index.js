@@ -58,7 +58,7 @@ router.get('/users/:id', async (req, res) => {
         dailyScore: 0,
         weeklyScore: 0,
         monthlyScore: 0,
-        level: 1
+        level: 1,
       });
     }
 
@@ -77,7 +77,7 @@ router.put('/users/:id', async (req, res) => {
     console.log(chalk.cyan('Update data:', JSON.stringify(req.body, null, 2)));
 
     const user = await User.findOne({
-      where: { external_id_telegram: req.params.id }
+      where: { external_id_telegram: req.params.id },
     });
 
     if (!user) {
@@ -87,15 +87,19 @@ router.put('/users/:id', async (req, res) => {
 
     // Update user data
     await user.update(req.body);
-    
+
     // Fetch the updated user to return
     const updatedUser = await User.findOne({
-      where: { external_id_telegram: req.params.id }
+      where: { external_id_telegram: req.params.id },
     });
 
-    console.log(chalk.green('User updated successfully:', JSON.stringify(updatedUser, null, 2)));
+    console.log(
+      chalk.green(
+        'User updated successfully:',
+        JSON.stringify(updatedUser, null, 2),
+      ),
+    );
     res.json(updatedUser);
-
   } catch (error) {
     console.error(chalk.red('Error updating user:', error));
     res.status(500).json({ error: error.message });

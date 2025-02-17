@@ -12,12 +12,20 @@ const app = express();
 const PORT = process.env.PORT || 8888;
 
 // Configure CORS
-app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:8888', 'http://127.0.0.1:5173'],
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: [
+      'http://localhost:5173',
+      'http://localhost:8888',
+      'http://127.0.0.1:5173',
+      'https://galaclicker.vercel.app/',
+      'https://telegrambotserver-production.up.railway.app/',
+    ],
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  }),
+);
 
 // Parse JSON bodies
 app.use(express.json());
@@ -58,4 +66,3 @@ async function start() {
 }
 
 start();
-
