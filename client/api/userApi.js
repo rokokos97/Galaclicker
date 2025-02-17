@@ -3,49 +3,117 @@ import { getCurrentLevel } from "../game/levels";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
-export async function updateUser(updatedUser) {
-    console.log('Updated USER', updatedUser)
-    console.log('Updated USER ID', updatedUser.external_id_telegram)
+// Ensure SERVER_URL ends with a slash
+const getApiUrl = (endpoint) => {
+    const baseUrl = SERVER_URL.endsWith('/') ? SERVER_URL : `${SERVER_URL}/`;
+    return `${baseUrl}${endpoint}`;
+};
+
+/**
+ * Updates user data on the server
+ * @param {Object} userData - The user data to update
+ * @param {string} userData.external_id_telegram - Telegram user ID
+ * @param {number} userData.score - User's total score
+ * @param {number} userData.dailyScore - User's daily score
+ * @param {number} userData.monthlyScore - User's monthly score
+ * @returns {Promise<Object>} Updated user data or error object
+ */
+export async function updateUser(userData) {
     try {
-        const response = await fetch(`${SERVER_URL}/api/users/${updatedUser.external_id_telegram}`, {
+        console.log('🔄 Updating user data:', userData);
+        
+        if (!userData.external_id_telegram) {
+            throw new Error('external_id_telegram is required');
+        }
+
+        const currentTime = new Date().toISOString();
+        const dataToUpdate = {
+            ...userData,
+            lastUpdated: currentTime,
+            lastUpdatedMonthly: currentTime
+        };
+
+        console.log('📤 Sending update request for user:', dataToUpdate);
+
+        const response = await fetch(getApiUrl(`api/users/${userData.external_id_telegram}`), {
             method: 'PUT',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
-            body: JSON.stringify(updatedUser)
+            credentials: 'include',
+            mode: 'cors',
+            body: JSON.stringify(dataToUpdate)
         });
+
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`)
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
+
+        const updatedUser = await response.json();
+        console.log('✅ User updated successfully:', updatedUser);
+        return updatedUser;
+
     } catch (error) {
-        console.error('Error updating user:', error)
-        return { error: 'Error updating user data' }
+        console.error('❌ Error updating user:', error);
+        return { error: error.message || 'Error updating user data' };
     }
 }
 
 export async function fetchUser(userId) {
     try {
-        let response = await fetch(`${SERVER_URL}/api/users/${userId}`)
+        const url = getApiUrl(`api/users/${userId}`);
+        console.log('🔍 Fetching user from:', url);
+        
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+            credentials: 'include',
+            mode: 'cors'
+        });
+        console.log('📡 Response status:', response.status);
+        
         if (!response.ok) {
             throw new Error(`Request error! status: ${response.status}`);
         }
-        return await response.json()
+        
+        const data = await response.json();
+        console.log('📦 Received user data:', data);
+        
+        if (!data) {
+            throw new Error('No user data received');
+        }
+        
+        return data;
     } catch (error) {
-        console.error('Error fetching user:', error)
+        console.error('❌ Error fetching user:', error);
+        throw error; // Re-throw to handle in initUser
     }
 }
 
 export async function fetchAllUsers() {
     try {
-        let response = await fetch(`${SERVER_URL}/api/users`)
+        let response = await fetch(getApiUrl('api/users'), {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json'
+            },
+            credentials: 'include',
+            mode: 'cors'
+        })
         if (!response.ok) {
             throw new Error(`Request error! status: ${response.status}`);
         }
+        console.log('response', response)
         return  await response.json()
     } catch (error) {
         console.error('Error fetching user:', error)
     }
 }
+
+
 
 export function updateUserInfo() {
     const userInfoDiv = document.querySelector('.user__info');
