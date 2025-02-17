@@ -28,10 +28,15 @@ import { initUser } from './initUser';
 
 const tg = window.Telegram.WebApp;
 const telegramUser = tg.initDataUnsafe.user.id;
+// const telegramUser = 244718113
 console.log("telegramUser", telegramUser)
+
+
 
 if (telegramUser) {
     initUser();
+    initializeApp();
+    runGame();
 } else {
     localStorage.setItem('userId', '007');
     localStorage.setItem('username', 'Test');
@@ -60,13 +65,13 @@ function resetScore(){
     updateGameUi()
 }
 
-function runGame(){
+export function runGame(){
     resetScore();
     updateGameUi();
     handleUserUpdates();
 }
 
-function updateGameUi(){
+export function updateGameUi(){
     updateProgressBar();
     updateImageAndLevel();
     updateClicksLeft();
@@ -78,7 +83,7 @@ function updateGameUi(){
 
 }
 
-function handleUserUpdates(){
+export function handleUserUpdates(){
     updateUserInfo();
     fetchAllUsers().then(users => displayLeaderboard(users));
 
@@ -91,7 +96,7 @@ function handleUserUpdates(){
 
 }
 
-function initializeApp() {
+export function initializeApp() {
     setupLeaderboard();
     initializeLeaderboard();
 
