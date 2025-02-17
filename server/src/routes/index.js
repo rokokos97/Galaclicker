@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const chalk = require('chalk');
 const User = require('../models/user');
 const Level = require('../models/level');
 
@@ -48,9 +49,10 @@ router.get('/users/:id', async (req, res) => {
     const user = await User.findOne({
       where: { external_id_telegram: req.params.id },
     });
-    res.json(user);
+    console.log(chalk.yellow('user', JSON.stringify(user.toJSON(), null, 2)));
+    res.json(JSON.stringify(user.toJSON(), null, 2));
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: error });
   }
 });
 

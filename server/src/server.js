@@ -13,14 +13,7 @@ const PORT = process.env.PORT || 8888;
 
 app.use(express.json());
 app.use('/api', router);
-app.use(
-  cors({
-    origin: ['https://gala-clicker.vercel.app', 'https://rokokos97.github.io'],
-    methods: 'GET,POST,PUT,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type,Authorization',
-    credentials: true,
-  }),
-);
+app.use(cors());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../public')));
@@ -55,3 +48,4 @@ async function start() {
 }
 
 start();
+
