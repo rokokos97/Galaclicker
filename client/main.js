@@ -27,8 +27,8 @@ import { getCurrentLevel } from './game/levels';
 import { initUser } from './initUser';
 
 const tg = window.Telegram.WebApp;
-const telegramUser = tg.initDataUnsafe.user.id;
-localStorage.setItem('external_id_telegram', telegramUser)
+const telegramUser = tg.initDataUnsafe.user;
+console.log("telegramUser", telegramUser)
 
 if (telegramUser) {
     initUser();
