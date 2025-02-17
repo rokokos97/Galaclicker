@@ -11,9 +11,19 @@ const app = express();
 
 const PORT = process.env.PORT || 8888;
 
+// Configure CORS
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:8888', 'http://127.0.0.1:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true
+}));
+
+// Parse JSON bodies
 app.use(express.json());
+
+// Routes
 app.use('/api', router);
-app.use(cors());
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../public')));
