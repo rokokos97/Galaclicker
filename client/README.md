@@ -1,85 +1,103 @@
-<img class="center" src="https://rokokos97.github.io/gala-clicker/gala-clicker-cover.webp" width="220">
+# Gala Clicker Client
 
-<span class="poppins">**Gala Clicker** is a Telegram mini app where you help your virtual programmer progress and write new lines of code. Your task is to click on the programmer's image to earn points and level up your character.</span>
+This is the client-side component of the Gala Clicker game, a Telegram mini-app where players help their virtual programmer progress by writing new lines of code. The game is built with vanilla JavaScript and integrates seamlessly with the Telegram Mini Apps API.
 
-## <span class="poppins">Table of Contents</span>
+## Deployment
 
-- <span class="poppins">[Features](#span-classpoppinsfeaturesspan)</span>
-- <span class="poppins">[Tech Stack](#span-classpoppinstech-stackspan)</span>
-- <span class="poppins">[Installation](#span-classpoppinsinstallationspan)</span>
-- <span class="poppins">[Contributing](#span-classpoppinscontributingspan)</span>
-- <span class="poppins">[License](#span-classpoppinslicensespan)</span>
-- <span class="poppins">[Developers](#span-classpoppinsdevelopersspan)</span>
+The client is deployed and accessible at:
+[https://rokokos97.github.io/gala-clicker/](https://rokokos97.github.io/gala-clicker/)
 
-## <span class="poppins">Features</span>
+Play via Telegram Bot:
+[@gala_clicker_bot](https://web.telegram.org/k/#@gala_clicker_bot)
 
-- <span class="poppins">Engaging Gameplay: Click on the programmer’s image to write new lines of code and earn points</span>
-- <span class="poppins">Level Progression: Advance through levels as you accumulate more points, with each level increasing the lines of code earned per click</span>
-- <span class="poppins">Limited Clicks: You start with a certain number of available clicks that gradually recover over time. When clicks run out, the image turns black and white, and you must wait for them to recovert</span>
-- <span class="poppins">Score Tracking: Keep track of your daily, monthly, and total scores. Daily and monthly scores reset regularly, allowing for fresh competition</span>
-- <span class="poppins">Leaderboard: Compete with other players and see where you rank on the global leaderboard based on your total score.</span>
-- <span class="poppins">User Profile: View your user profile, including your avatar, total clicks, and current level</span>
-- <span class="poppins">Mobile-Friendly: Optimized for use as a Telegram mini app, ensuring smooth performance and a seamless user experience on mobile devices</span>
-- <span class="poppins">CAutomatic Data Sync: User data is automatically synchronized with the server to keep your progress</span>
+## Game Features
 
+- **Engaging Gameplay**: Click on the programmer's image to write new lines of code and earn points
+- **Level Progression**: Advance through levels with increasing rewards per click
+- **Limited Clicks**: Strategic resource management with regenerating clicks
+- **Score Tracking**: Daily, monthly, and total score tracking
+- **Leaderboard**: Compete globally with other players
+- **User Profile**: Track your progress and achievements
+- **Mobile-First Design**: Optimized for Telegram Mini Apps
+- **Real-time Sync**: Automatic data synchronization with server
 
-## <span class="poppins">Tech Stack</span>
-### <span class="poppins">Frontend</span>
-- **HTML**: Structuring the content of the web application.
-- **CSS**: Styling the application to provide an engaging user experience.
-- **JavaScript**: Adding interactivity and dynamic content updates.
-- **Telegram Web Apps API:**: Integration with Telegram for seamless user authentication and interaction.
-### <span class="poppins">Backend</span>
-- All information about the backend is available in the backend repository. Please visit the link.
+## Tech Stack
 
-### <span class="poppins">Deployment</span>
-- **GitHub Pages**: Hosting service for deploying the static front-end of the web application.
+- **Core**: HTML5, CSS3, JavaScript (ES6+)
+- **API Integration**: Telegram Mini Apps API
+- **Build Tool**: Vite
+- **Deployment**: GitHub Pages
 
-## <span class="poppins">Installation</span>
-### <span class="poppins">Steps</span>
+## Prerequisites
 
-1. <span class="poppins">Clone the repository:</span>
+- Node.js >= 14.0.0
+- npm or yarn
+- Modern web browser
 
-    ```bash
-    git clone https://github.com/rokokos97/gala-clicker.git
-    ```
+## Installation
 
-2. <span class="poppins">Install dependencies:</span>
+1. Clone the repository:
 
-    ```bash
-    cd gala-clicker
-    npm install
-    ```
+   ```bash
+   git clone https://github.com/rokokos97/gala-clicker.git
+   cd gala-clicker/client
+   ```
 
-3. <span class="poppins">Start developing:</span>
+2. Install dependencies:
 
-   Begin developing in dev mode:</span>
+   ```bash
+   npm install
+   ```
 
-    ```env
-    npm run dev
-    ```
+3. Create `.env` file:
 
+   ```env
+   VITE_SERVER_URL=http://localhost:3001
+   ```
 
-## <span class="poppins">Live Demo</span>
+## Available Scripts
 
-### <span class="poppins">You can also visit the working project at the following link:</span> [Gala Clicker](rokokos97.github.io/gala-clicker/) or find the telegram bot at the following [Gala Clicker Bot](https://web.telegram.org/k/#@gala_clicker_bot)
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm run format` - Format code with Prettier
 
-## <span class="poppins">Contributing</span>
+## Project Structure
 
-<span class="poppins">Project still in progress. Contributions are welcome! Please follow these steps to contribute:</span>
+| File / Directory         | Description                    |
+|--------------------------|--------------------------------|
+| `public/`                | Static assets directory        |
+| `├── images/`            | Game images and assets         |
+| `├── icons/`             | UI icons and visual elements   |
+| `src/`                   | Main source code directory     |
+| `├── components/`        | Reusable UI components         |
+| `├── styles/`            | CSS stylesheets and themes     |
+| `├── utils/`             | Helper functions and utilities |
+| `├── main.js`            | Application entry point        |
+| `index.html`             | Main HTML template             |
+| `vite.config.js`         | Vite build configuration       |
+| `.env`                   | Environment variables (create this) |
+| `package.json`           | Project dependencies and scripts |
 
-1. <span class="poppins">Fork the repository.</span>
-2. <span class="poppins">Create a new branch: `git checkout -b feature/your-feature-name`.</span>
-3. <span class="poppins">Make your changes and commit them: `git commit -m 'Add some feature'`.</span>
-4. <span class="poppins">Push to the branch: `git push origin feature/your-feature-name`.</span>
-5. <span class="poppins"> Open a pull request.</span>
+## Environment Variables
 
-## <span class="poppins">License</span>
+| Variable          | Description     | Default               |
+|-------------------|-----------------|-----------------------|
+| `VITE_SERVER_URL` | Backend API URL | http://localhost:3001 |
 
-<span class="poppins">This project is licensed under the MIT License - see the [LICENSE](LICENSE.txt) file for details.</span>
+## Contributing
 
-## <span class="poppins">Developers</span>
+1. Fork the repository
+2. Create your feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
 
-- <span class="poppins">[Rostyslav Lisovyi](https://github.com/rokokos97)</span> - Front-end
+## License
 
-### <span class="poppins">Thank you for checking out GALA CLICKER! If you have any questions or suggestions, feel free to open an issue or contact me.</span>
+This project is licensed under the MIT License.
+
+## Developers
+
+- [Rostyslav Lisovyi](https://github.com/rokokos97) - Frontend Developer

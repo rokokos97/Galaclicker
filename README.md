@@ -1,117 +1,38 @@
-# Gala Clicker
+# Galaclicker
 
-A full-stack web application with a Vite-powered frontend and Express.js TypeScript backend.
+**Galaclicker** is a full-stack project running in the **Telegram** environment. The game is launched via a Telegram bot and interacts with the backend to process database requests.
 
-## 🏗️ Project Structure
+## 📂 Repository Structure
 
-```bash
-gala-clicker/
-├── client/                 # Frontend application
-│   ├── public/            # Static assets
-│   ├── index.html         # Entry HTML file
-│   ├── main.js           # Main JavaScript entry point
-│   ├── style.css         # Global styles
-│   └── vite.config.js    # Vite configuration
-│
-└── server/                # Backend application
-    ├── src/              # TypeScript source files
-    ├── public/           # Static files
-    └── tsconfig.json     # TypeScript configuration
-```
+- **`server/`** — The backend part that handles requests, manages the database, and game logic. Detailed documentation is available in this folder.
+- **`client/`** — The frontend part that implements the game interface and communicates with the Telegram API. Full documentation is also available in this folder.
 
-## 🚀 Quick Start
+## 🚀 How to Play Galaclicker
 
-### Prerequisites
+1. **Start the Game**
+   - Open Telegram.
+   - Find our bot (@gala_clicker_bot).
+   - Press **/Запустити гру** to begin the game.
 
-- Node.js (v14 or higher)
-- npm or yarn
+2. **Main Gameplay**
+   - Click the **Developer image** button to earn points.
+   - Compete with other players in the leaderboard.
 
-### Frontend Setup (Client)
+3. **Game Commands**
+   - `/game` — Start the game
+   - `/rules` — Game rules
+   - `/user` — User info
+   - `/leaderboard` — Display the top players
 
-```bash
-# Navigate to client directory
-cd client
+## 👨‍💻 Project Team
 
-# Install dependencies
-npm install
+- **[Yuri Galdetsky](https://www.linkedin.com/in/yuriygaldetsky/)** — Project Manager
+- **[Rostyslav Lisovyi](https://www.linkedin.com/in/roslisovyi/)** — Developer
 
-# Start development server
-npm run dev
-```
+## 📌 License
 
-The frontend will be available at `http://localhost:5173`
+This project is open-source and distributed under the MIT License.
 
-### Backend Setup (Server)
+---
 
-```bash
-# Navigate to server directory
-cd server
-
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-```
-
-The backend API will be available at `http://localhost:8888`
-
-## 🛠️ Tech Stack
-
-### Frontend
-
-- Vite - Build tool and development server
-- Vanilla JavaScript - Core programming
-- Modern CSS - Styling
-
-### Backend
-
-- Node.js - Runtime environment
-- Express.js - Web framework
-- TypeScript - Programming language
-- MongoDB - Database (optional)
-
-## 🔧 Environment Variables
-
-### Client (.env)
-
-```env
-VITE_SERVER_URL=http://localhost:8888
-```
-
-### Server (.env)
-
-```env
-SERVER_PORT=8888
-DATABASE_URL=your_database_url
-VITE_SERVER_URL=http://localhost:8888```
-
-## 📝 Scripts
-
-### Client
-
-- `npm run dev` - Start development server
-- `npm run build` - Build for production
-- `npm run preview` - Preview production build
-
-### Server
-
-- `npm run dev` - Start development server
-- `npm run build` - Build TypeScript to JavaScript
-- `npm start` - Start production server
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 👥 Authors
-
-- Rostyslav Lisovyi - [GitHub](https://github.com/rokokos97)
+Thank you for playing **Galaclicker**! 🚀
