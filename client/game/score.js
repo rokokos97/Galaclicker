@@ -11,6 +11,7 @@ import { updateProgressBar,
 } from './gameState'
 import { updateUser } from '../api/userApi'
 
+const $circle = document.querySelector("#circle")
 const $score = document.querySelector("#score")
 const $dailyScore = document.querySelector("#daily-score")
 const $monthlyScore = document.querySelector("#monthly-score")

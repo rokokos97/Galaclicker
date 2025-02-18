@@ -74,7 +74,7 @@ export function startRecoveryProcess() {
             } else {
                 stopRecoveryProcess();
             }
-        }, 10000);
+        }, 5000);
     }
 }
 

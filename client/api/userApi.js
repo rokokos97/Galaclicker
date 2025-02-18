@@ -8,20 +8,9 @@ const getApiUrl = (endpoint) => {
     const baseUrl = SERVER_URL.endsWith('/') ? SERVER_URL : `${SERVER_URL}/`;
     return `${baseUrl}${endpoint}`;
 };
-
-/**
- * Updates user data on the server
- * @param {Object} userData - The user data to update
- * @param {string} userData.external_id_telegram - Telegram user ID
- * @param {number} userData.score - User's total score
- * @param {number} userData.dailyScore - User's daily score
- * @param {number} userData.monthlyScore - User's monthly score
- * @returns {Promise<Object>} Updated user data or error object
- */
 export async function updateUser(userData) {
     try {
         console.log('🔄 Updating user data:', userData);
-        
         if (!userData.external_id_telegram) {
             throw new Error('external_id_telegram is required');
         }
@@ -64,7 +53,6 @@ export async function fetchUser(userId) {
     try {
         const url = getApiUrl(`api/users/${userId}`);
         console.log('🔍 Fetching user from:', url);
-        
         const response = await fetch(url, {
             method: 'GET',
             headers: {
@@ -74,18 +62,14 @@ export async function fetchUser(userId) {
             mode: 'cors'
         });
         console.log('📡 Response status:', response.status);
-        
         if (!response.ok) {
             throw new Error(`Request error! status: ${response.status}`);
         }
-        
         const data = await response.json();
         console.log('📦 Received user data:', data);
-        
         if (!data) {
             throw new Error('No user data received');
         }
-        
         return data;
     } catch (error) {
         console.error('❌ Error fetching user:', error);
@@ -142,16 +126,3 @@ export function storeUserData(user){
     localStorage.setItem('lastUpdatedMonthly', user.lastUpdatedMonthly || '');
     localStorage.setItem('availableLines', String(user.availableLines || '100'));
 }
-
-// async function fetchLevels() {
-//     try {
-//         let response = await fetch(`${SERVER_LEVELS_URL}`)
-//         if (!response.ok) {
-//             throw new Error(`Request error! status: ${response.status}`);
-//         }
-//         let data = await response.json()
-//         return data;
-//     } catch (error) {
-//         console.error('Error fetching user:', error)
-//     }
-// }
