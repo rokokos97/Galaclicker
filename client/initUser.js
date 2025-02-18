@@ -21,24 +21,8 @@ export function initUser(telegramUser) {
                 throw new Error('Invalid user data received');
             }
             console.log('✅ User data received:', dbUser);
-            
-            // Ensure all required fields have default values
-            // const userData = {
-            //     external_id_telegram: telegramUserId,
-            //     username: 'Player',
-            //     first_name: 'New',
-            //     last_name: 'Player',
-            //     score: 0,
-            //     dailyScore: 0,
-            //     monthlyScore: 0,
-            //     lastUpdated: new Date().toISOString(),
-            //     lastUpdatedMonthly: new Date().toISOString(),
-            //     availableLines: 100,
-            //     ...dbUser // This will override defaults with actual values
-            // };
 
-            console.log('✅ Storing user data:', userData);
-            storeUserData(userData);
+            storeUserData(dbUser);
         })
         .catch((error) => {
             console.error('❌ Error initializing user:', error);
