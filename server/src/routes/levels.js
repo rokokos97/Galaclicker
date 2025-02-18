@@ -2,7 +2,31 @@ const express = require('express');
 const router = express.Router();
 const Level = require('../models/level');
 
-// Get all levels
+/**
+ * @swagger
+ * tags:
+ *   name: Levels
+ *   description: Game levels management
+ */
+
+/**
+ * @swagger
+ * /api/levels:
+ *   get:
+ *     summary: Get all game levels
+ *     tags: [Levels]
+ *     responses:
+ *       200:
+ *         description: List of all levels ordered by ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Level'
+ *       500:
+ *         description: Server error
+ */
 router.get('/', async (req, res) => {
   try {
     const levels = await Level.findAll({

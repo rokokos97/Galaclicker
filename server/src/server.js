@@ -3,9 +3,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const chalk = require('chalk');
+const swaggerUi = require('swagger-ui-express');
 const router = require('./routes/index');
 const { initDatabase } = require('./config/database');
 const { galaClickerBot } = require('./bots/galaClicker');
+const swaggerSpec = require('./config/swagger');
 
 const app = express();
 
@@ -29,6 +31,9 @@ app.use(
 
 // Parse JSON bodies
 app.use(express.json());
+
+// Swagger Documentation
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 // Routes
 app.use('/api', router);

@@ -3,7 +3,31 @@ const router = express.Router();
 const chalk = require('chalk');
 const User = require('../models/user');
 
-// Get all users
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management endpoints
+ */
+
+/**
+ * @swagger
+ * /api/users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Users]
+ *     responses:
+ *       200:
+ *         description: List of all users ordered by score
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Server error
+ */
 router.get('/', async (req, res) => {
   try {
     const users = await User.findAll({
@@ -16,7 +40,29 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Get user by ID
+/**
+ * @swagger
+ * /api/users/{id}:
+ *   get:
+ *     summary: Get user by Telegram ID
+ *     tags: [Users]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Telegram ID of the user
+ *     responses:
+ *       200:
+ *         description: User details
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/User'
+ *       500:
+ *         description: Server error
+ */
 router.get('/:id', async (req, res) => {
   try {
     const clientIp = req.ip;
