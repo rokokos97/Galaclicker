@@ -6,6 +6,22 @@ This is the server-side component of the Telegram game bot application. The main
 - Connect to and interact with the PostgreSQL database
 - Handle Telegram bot interactions
 
+## Deployment
+
+The server is deployed and accessible at:
+[https://telegrambotserver-production.up.railway.app/](https://telegrambotserver-production.up.railway.app/)
+
+## API Documentation
+
+The API documentation is available through Swagger UI at:
+[https://telegrambotserver-production.up.railway.app/api-docs/](https://telegrambotserver-production.up.railway.app/api-docs/)
+
+The documentation provides detailed information about:
+
+- Available endpoints
+- Request/response schemas
+- Example requests and responses
+
 ## Tech Stack
 
 - Node.js
