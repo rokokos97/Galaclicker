@@ -1,5 +1,5 @@
 import { fetchUser } from "./api/userApi";
-import { storeUserData } from "./api/userApi";
+import { storeUserData } from "./api/storeUserData";
 
 export function initUser(telegramUser) {
     const tg = window.Telegram?.WebApp;
@@ -20,7 +20,6 @@ export function initUser(telegramUser) {
         })
         .catch((error) => {
             console.error('❌ Error initializing user:', error);
-            storeUserData();
         });
 
     tg.expand();

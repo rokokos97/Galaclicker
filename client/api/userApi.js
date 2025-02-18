@@ -114,15 +114,4 @@ export function updateUserInfo() {
     `;
 }
 
-export function storeUserData(user){
-    localStorage.setItem('external_id_telegram', user.external_id_telegram || '007');
-    localStorage.setItem('username', user.username || 'Test');
-    localStorage.setItem('first_name', user.first_name || 'Test');
-    localStorage.setItem('last_name', user.last_name || 'Test');
-    localStorage.setItem('score', user.score || '0');
-    localStorage.setItem('dailyScore', user.dailyScore || '0');
-    localStorage.setItem('monthlyScore', user.monthlyScore || '0');
-    localStorage.setItem('lastUpdated', user.lastUpdated || '');
-    localStorage.setItem('lastUpdatedMonthly', user.lastUpdatedMonthly || '');
-    localStorage.setItem('availableLines', String(user.availableLines));
-}
+
