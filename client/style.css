@@ -112,8 +112,9 @@ footer ul li a {
   margin: 0;
   padding: 2px 4px;
   border-radius: 20%;
-  border: #F7B84B solid 0.5px
+  /* border: #F7B84B solid 0.5px */
 }
+
 .head__score-sections {
   width: 100%;
   display: flex;
@@ -278,12 +279,21 @@ footer ul li a {
   gap: 10px;
   padding: 20px;
 }
-.user__image-container {
+/* .user__image-container {
   width: 120px;
   height: 120px;
   border-radius: 50%;
   overflow: hidden;
+} */
+.user__img-container img{
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: solid #F7B84B 4px;
+  
+  overflow: hidden;
 }
+
 .user__info {
   width: 100%;
   color: #F7B84B;
