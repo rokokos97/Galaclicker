@@ -3,6 +3,7 @@ import { storeUserData } from "./api/userApi";
 
 export function initUser(telegramUser) {
     const tg = window.Telegram?.WebApp;
+    console.log('tg', tg);
     if (!telegramUser) {
         console.warn('❗ Telegram WebApp API недоступний або користувач не авторизований.');
         startTestMode();
@@ -19,23 +20,22 @@ export function initUser(telegramUser) {
             if (!dbUser || typeof dbUser !== 'object') {
                 throw new Error('Invalid user data received');
             }
-
             console.log('✅ User data received:', dbUser);
             
             // Ensure all required fields have default values
-            const userData = {
-                external_id_telegram: telegramUserId,
-                username: 'Player',
-                first_name: 'New',
-                last_name: 'Player',
-                score: 0,
-                dailyScore: 0,
-                monthlyScore: 0,
-                lastUpdated: new Date().toISOString(),
-                lastUpdatedMonthly: new Date().toISOString(),
-                availableLines: 100,
-                ...dbUser // This will override defaults with actual values
-            };
+            // const userData = {
+            //     external_id_telegram: telegramUserId,
+            //     username: 'Player',
+            //     first_name: 'New',
+            //     last_name: 'Player',
+            //     score: 0,
+            //     dailyScore: 0,
+            //     monthlyScore: 0,
+            //     lastUpdated: new Date().toISOString(),
+            //     lastUpdatedMonthly: new Date().toISOString(),
+            //     availableLines: 100,
+            //     ...dbUser // This will override defaults with actual values
+            // };
 
             console.log('✅ Storing user data:', userData);
             storeUserData(userData);

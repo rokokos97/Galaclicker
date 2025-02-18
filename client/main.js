@@ -27,11 +27,13 @@ import { getCurrentLevel } from './game/levels';
 import { initUser } from './initUser';
 
 const tg = window.Telegram.WebApp;
-const telegramUser = tg.initDataUnsafe.user.id;
-// const telegramUser = 244718113
+console.log("tg user", tg.initDataUnsafe.user)
+let telegramUser = tg.initDataUnsafe.user?.id;
+if(!telegramUser){
+    console.log("telegram id do not find")
+    telegramUser = 244718113
+}
 console.log("telegramUser", telegramUser)
-
-
 
 if (telegramUser) {
     initUser(telegramUser);
