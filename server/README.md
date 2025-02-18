@@ -44,12 +44,29 @@ This is the server-side component of the Telegram game bot application. The main
 
 ## Project Structure
 
-server/
-├── src/           # Source code
-├── public/        # Static files
-├── .env.example   # Example environment variables
-├── .env           # Environment variables (create this)
-└── package.json   # Project dependencies and scripts
+| File / Directory            | Description                                     |
+| --------------------------- | ----------------------------------------------- |
+| `src/`                      | Main code directory                             |
+| `├── bots/`                 | Telegram bot implementations                    |
+| `│   ├── galaClicker.js`    | Main game bot implementation                    |
+| `│   └── tricalc.js`        | Additional bot functionality                    |
+| `├── config/`               | Configuration files                             |
+| `│   ├── database.js`       | Database configuration and setup                |
+| `│   └── sequelize.js`      | Sequelize ORM configuration                     |
+| `├── models/`               | Database models                                 |
+| `│   ├── user.js`           | User model definition                           |
+| `│   └── level.js`          | Level model definition                          |
+| `├── routes/`               | API route handlers                              |
+| `│   ├── index.js`          | Main route configuration                        |
+| `│   ├── user.js`           | User-related endpoints                          |
+| `│   ├── levels.js`         | Level-related endpoints                         |
+| `│   └── leaderboard.js`    | Leaderboard endpoints                           |
+| `├── mock/`                 | Mock data for development                       |
+| `├── uploads/`              | Directory for uploaded files                    |
+| `└── server.js`             | Main application entry point                    |
+| `.env.example`              | Example environment variables                   |
+| `.env`                      | Environment variables (create this)             |
+| `package.json`              | Project dependencies and scripts                |
 
 ## Environment Variables
 
