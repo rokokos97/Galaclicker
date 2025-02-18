@@ -1,8 +1,9 @@
 import './style.css';
+import { storeUserData } from './api/storeUserData/storeUserData';
 
-import { storeUserData, updateUserInfo, fetchAllUsers } from './api/userApi'
+import { updateUserInfo, fetchAllUsers } from './api/userApi'
 
-import { setupLeaderboard, initializeLeaderboard, displayLeaderboard } from './ui/leaderboard';
+import { setupLeaderboard, displayLeaderboard } from './ui/leaderboard';
 
 import { checkAndResetDailyScore,
     checkAndResetMonthlyScore,
@@ -36,9 +37,8 @@ if(!telegramUser){
 // console.log("telegramUser", telegramUser)
 
 if (telegramUser) {
+    
     initUser(telegramUser);
-    initializeApp();
-    runGame();
 } else {
     localStorage.setItem('userId', '007');
     localStorage.setItem('username', 'Test');
@@ -50,11 +50,10 @@ if (telegramUser) {
     localStorage.setItem('lastUpdated', '');
     localStorage.setItem('lastUpdatedMonthly', '');
     localStorage.setItem('availableLines', '100');
-    storeUserData({});
-    initializeApp();
-    runGame();
     console.error('User data not available run test game');
 }
+initializeApp();
+runGame();
 
 function resetScore(){
     checkAndResetDailyScore()
@@ -100,7 +99,7 @@ export function handleUserUpdates(){
 
 export function initializeApp() {
     setupLeaderboard();
-    initializeLeaderboard();
+    // initializeLeaderboard();
 
     const navLinks = document.querySelectorAll("nav ul li a")
     const sections = document.querySelectorAll(".section")

@@ -18,8 +18,8 @@ export function setupLeaderboard() {
     });
 }
 
-export function initializeLeaderboard() {
-    fetchAllUsers().then(users => {
-        console.log(users)
-        return displayLeaderboard(users)});
-}
+// export function initializeLeaderboard() {
+//     fetchAllUsers().then(users => {
+//         console.log(users)
+//         return displayLeaderboard(users)});
+// }

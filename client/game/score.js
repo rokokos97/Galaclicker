@@ -17,15 +17,17 @@ const $dailyScore = document.querySelector("#daily-score")
 const $monthlyScore = document.querySelector("#monthly-score")
 
 export function checkAndResetDailyScore() {
-    const lastUpdatedDaily = localStorage.getItem('lastUpdated')
+    const lastUpdatedDaily = localStorage.getItem('lastUpdated').split('T')[0]
     const today = new Date().toISOString().split('T')[0];
+    
+    console.log('today', today, 'lastUpdatedDaily', lastUpdatedDaily, typeof lastUpdatedDaily)
     if (lastUpdatedDaily !== today) {
         localStorage.setItem('dailyScore', 0)
         localStorage.setItem('lastUpdated', today)
     }
 }
 export function checkAndResetMonthlyScore() {
-    const lastUpdatedMonthly = localStorage.getItem('lastUpdatedMonthly')
+    const lastUpdatedMonthly = localStorage.getItem('lastUpdatedMonthly').split('T')[0].slice(0, 7)
     const currentMonth = new Date().toISOString().split('T')[0].slice(0, 7)
     if (lastUpdatedMonthly!==currentMonth) {
         localStorage.setItem('monthlyScore', 0)
@@ -51,10 +53,6 @@ export function setMonthlyScore(score) {
 export function getScore (){return Number(localStorage && localStorage.getItem('score')) || 0}
 export function getDailyScore(){return Number(localStorage.getItem('dailyScore')) || 0}
 export function getMonthlyScore() {return Number(localStorage.getItem('monthlyScore')) || 0}
-
-
-
-
 
 
 export function incrementScore (){

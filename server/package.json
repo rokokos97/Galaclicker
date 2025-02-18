@@ -9,7 +9,8 @@
     "dev": "nodemon src/server.js",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write \"**/*.{js,json}\""
+    "format": "prettier --write \"**/*.{js,json}\"",
+    "test": "jest"
   },
   "keywords": [],
   "author": "lisovyi.rostyslav@gmail.com",
