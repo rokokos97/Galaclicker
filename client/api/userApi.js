@@ -124,5 +124,5 @@ export function storeUserData(user){
     localStorage.setItem('monthlyScore', user.monthlyScore || '0');
     localStorage.setItem('lastUpdated', user.lastUpdated || '');
     localStorage.setItem('lastUpdatedMonthly', user.lastUpdatedMonthly || '');
-    localStorage.setItem('availableLines', String(user.availableLines || '100'));
+    localStorage.setItem('availableLines', String(user.availableLines));
 }

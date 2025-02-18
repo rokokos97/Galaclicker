@@ -95,7 +95,7 @@ export function incrementScore (){
 
     setTimeout(() => {
         startRecoveryProcess()
-    }, 5000)
+    }, 2000)
     } else {
         $circle.classList.add('grayscale')
         return

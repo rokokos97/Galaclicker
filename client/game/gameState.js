@@ -45,6 +45,12 @@ export function getAvailableLines() {
 export function setAvailableLines(value) {
     availableLines = value;
     localStorage.setItem("availableLines", availableLines);
+    localStorage.setItem('availableLines', value);
+    if (value > 0) {
+        $circle.classList.remove('grayscale');
+    } else {
+        $circle.classList.add('grayscale');
+    }
     updateAvailableLines();
 }
 
@@ -57,6 +63,9 @@ export function decrementAvailableLines() {
 
 export function incrementAvailableLines() {
     setAvailableLines(getAvailableLines() + 1);
+    if (getAvailableLines() > 0) {
+        $circle.classList.remove('grayscale');
+    }
 }
 
 
