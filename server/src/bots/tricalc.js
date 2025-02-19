@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 
 dotenv.config();
 
-function createTriCalcBot() {
+function triCalcBot() {
   const token = process.env.TELEGRAM_TOKEN_TRICALC;
   if (!token) {
     console.error(chalk.red('TELEGRAM_TOKEN_TRICALC is not defined!'));
@@ -14,7 +14,22 @@ function createTriCalcBot() {
 
   bot.start(async (ctx) => {
     console.log(chalk.green('Tricalc bot was running...'));
-    await ctx.reply('Welcome to Tricalc bot!');
+    ctx.reply('Welcome to Tricalc', {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            {
+              text: 'Calculate',
+              web_app: {
+                url:
+                  process.env.FRONT_URL_TRICALC ||
+                  'https://rokokos97.github.io/tricalc',
+              },
+            },
+          ],
+        ],
+      },
+    });
   });
   bot.catch((err) => {
     console.error(chalk.red('Bot Error:', err));
@@ -30,4 +45,4 @@ function createTriCalcBot() {
   return bot;
 }
 
-module.exports = { createTriCalcBot };
+module.exports = { triCalcBot };
