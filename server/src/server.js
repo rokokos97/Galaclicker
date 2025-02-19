@@ -7,6 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const router = require('./routes/index');
 const { initDatabase } = require('./config/database');
 const { galaClickerBot } = require('./bots/galaClicker');
+const { createTriCalcBot } = require('./bots/tricalc')
 const swaggerSpec = require('./config/swagger');
 
 const app = express();
@@ -53,6 +54,7 @@ async function start() {
       console.log(chalk.green(`Server is running on port ${PORT}`));
     });
     await galaClickerBot();
+    await createTriCalcBot();
   } catch (error) {
     console.error(chalk.red('Server failed to start:', error));
     process.exit(1);
