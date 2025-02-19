@@ -7,7 +7,7 @@ const swaggerUi = require('swagger-ui-express');
 const router = require('./routes/index');
 const { initDatabase } = require('./config/database');
 const { galaClickerBot } = require('./bots/galaClicker');
-const { createTriCalcBot } = require('./bots/tricalc')
+const { createTriCalcBot } = require('./bots/tricalc');
 const swaggerSpec = require('./config/swagger');
 
 const app = express();
