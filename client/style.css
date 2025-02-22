@@ -22,7 +22,7 @@ html, body {
   flex-direction: column;
   font-family: "Helvetica Neue";
   margin-inline: auto;
-  height: 98vh;
+  height: 80vh;
   padding: 0;
   max-width: 768px;
   display: flex;
