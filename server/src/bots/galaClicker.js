@@ -52,9 +52,9 @@ async function galaClickerBot() {
         inline_keyboard: [
           [
             {
-              text: '🚀 Запустити гру',
+              text: '🚀 Run the game',
               web_app: {
-                url: process.env.FRONT_URL || 'https://gala-clicker.vercel.app',
+                url: process.env.FRONT_URL || 'https://galaclicker.vercel.app/',
               },
             },
           ],
