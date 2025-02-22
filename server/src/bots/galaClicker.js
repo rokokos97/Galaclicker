@@ -27,7 +27,11 @@ async function galaClickerBot() {
       last_name: incomeUser.last_name ?? 'Unknown',
     };
 
-    const webAppUrl = `${process.env.FRONT_URL}?userId=${incomeUser.id.toString()}`;
+    const webAppUrl = (
+      process.env.FRONT_URL || 'https://galaclicker.vercel.app'
+    )
+      .trim()
+      .replace(/[/\s]+$/, '');
     console.log(webAppUrl);
     try {
       const user = await User.findOne({
@@ -54,7 +58,7 @@ async function galaClickerBot() {
             {
               text: '🚀 Run the game',
               web_app: {
-                url: process.env.FRONT_URL || 'https://galaclicker.vercel.app/',
+                url: webAppUrl,
               },
             },
           ],
