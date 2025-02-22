@@ -1,7 +1,14 @@
 require('dotenv').config();
+const chalk = require('chalk');
 const { Sequelize } = require('sequelize');
 
-const sequelize = new Sequelize(`${process.env.DATABASE_URL}`, {
+const dbUrl = process.env.DATABASE_URL;
+
+if (!dbUrl) {
+  console.error(chalk.red('dbUrl not found!'));
+}
+
+const sequelize = new Sequelize(dbUrl, {
   dialect: 'postgres',
   dialectOptions: {
     ssl: {
